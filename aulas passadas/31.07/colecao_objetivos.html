@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3> Elementos HTML por Coleção de Objetos</h3>
+
+    <form action="#" id="form1">
+        <label for="inome">Nome:</label>
+        <input type="text" id="inome" name="nome" size="10" value="Maria">
+        <input type="submit" value="Enviar">
+    </form>
+
+    <p id="mostrar"></p>
+
+    <hr>
+
+    <h3>O que o JavaScript pode fazer?</h3>
+    <p id="frase"> O JavaScript pode alterar o conteúdo. </p>
+
+    <button type="button" onclick='document.getElementById("frase").innerHTML = " <strong>O conteúdo foi alterado.</strong>"'>Clique aqui</button>
+</body>
+<script>
+    const x = document.forms["form1"];
+    let text = "";
+    for (let i = 0; i < x.length; i++) {
+        text += x.elements[i].value + "<br>";
+    }
+    document.getElementById("mostrar").innerHTML = text;
+</script>
+</html>
+

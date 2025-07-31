@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Alterando valores de atributos HTML</h3>
+
+    <button onclick="document.getElementById('img').src='img/ligada.gif'"> Liga</button>
+    
+    <img id="img" src="img/desligada.gif" style="width: 30px">
+    
+    <button onclick="document.getElementById('img').src='img/desligada.gif'"> Desliga</button>
+
+    <hr>
+
+    <p id="texto"> O JavaScript pode alterar o estilo de um elemento HTML</p>
+
+    <button type="button" onclick="document.getElementById('texto').style.color='red'">Cor Vermelha</button>
+    <button type="button" onclick="document.getElementById('texto').style.color='blue'">Cor Azul</button>
+    <!-- zoom in e out -->
+    <button type="button" onclick="document.getElementById('texto').style.fontSize='30px'">Aumentar</button>
+    <button type="button" onclick="document.getElementById('texto').style.fontSize='15px'">Diminuir</button>
+
+    <hr>
+
+    <h2>Ocultando e Exibindo Elementos</h2>
+
+    <p id="msg" style="display: none; font-size: 30px;"> Font: <a href="https://www.w3schools.com/" target="_blank">W3Schools</a></p>
+
+    <button type="button" onclick="document.getElementById('msg').style.display='none'">Ocultar</button>
+    <button type="button" onclick="document.getElementById('msg').style.display='block'">Exibir</button>
+
+</body>
+</html>
