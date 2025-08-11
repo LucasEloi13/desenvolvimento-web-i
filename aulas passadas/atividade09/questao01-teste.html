@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 500px;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #numeroInput {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #adicionarBtn,
+        #limparBtn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #adicionarBtn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #limparBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    Escreva um programa (HTML, JavaScript e CSS) que leia valores, parando no momento em que o valor ZERO, seja
+    lido. Mostrar os seguintes itens:
+        • Números lidos;
+        • Quantidade de números lidos;
+        • Quantidade de pares;
+        • Somatória de todos os números lidos;
+        • Mostrar a media (sem contar com o zero);
+        • Mostrar o maior e menor número lido.
+        • Obs: quando clicar no botão limpar, as informações devem ser apagadas, e deve colocar o “focus” no
+        campo “valores”.
+    -->
+
+    <div class="container">
+        <h2>Digite um número (0 para finalizar):</h2>
+
+        <div class="input-group">
+            <input type="number" id="numeroInput" placeholder="Número" autofocus>
+            <button id="adicionarBtn">Adicionar</button>
+            <button id="limparBtn">Limpar</button>
+        </div>
+
+        <div class="result-group">
+
+        </div>
+    </div>
+</body>
+</html>

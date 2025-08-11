@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Voltas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 500px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .descricao {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #tempoVoltaInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        #adicionarBtn {
+            background-color: #007bff;
+        }
+
+        #finalizarBtn {
+            background-color: #28a745;
+        }
+
+        #limparBtn {
+            background-color: #dc3545;
+        }
+
+        .secao-resultados {
+            margin-top: 30px;
+        }
+
+        .secao-resultados h3 {
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        #temposRegistrados {
+            min-height: 50px;
+        }
+
+        #temposRegistrados p {
+            margin: 5px 0;
+        }
+
+        .resultados-finais {
+            margin-top: 20px;
+        }
+        
+        .resultados-finais p {
+            margin: 5px 0;
+        }
+        
+        .resultado-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro de Voltas</h2>
+        <p class="descricao">Digite o tempo de cada volta (em segundos) e clique em "Adicionar".</p>
+        <div class="input-group">
+            <input type="number" id="tempoVoltaInput" placeholder="Tempo da volta (segundos)" step="0.01">
+            <button id="adicionarBtn" class="button">Adicionar</button>
+            <button id="finalizarBtn" class="button" disabled>Finalizar</button>
+            <button id="limparBtn" class="button">Limpar</button>
+        </div>
+
+        <div id="temposRegistrados" class="secao-resultados">
+            <h3>Tempos Registrados:</h3>
+        </div>
+
+        <div id="resultadosFinais" class="secao-resultados resultados-finais">
+            <h3>Resultados:</h3>
+            <p><span class="resultado-label">Melhor tempo:</span> <span id="melhorTempo">-</span></p>
+            <p><span class="resultado-label">Melhor volta:</span> <span id="melhorVolta">-</span></p>
+            <p><span class="resultado-label">Tempo médio por volta:</span> <span id="tempoMedio">-</span></p>
+        </div>
+    </div>
+
+    <script>
+        let tempos = [];
+        let voltaCount = 1;
+
+        const tempoVoltaInput = document.getElementById('tempoVoltaInput');
+        const adicionarBtn = document.getElementById('adicionarBtn');
+        const finalizarBtn = document.getElementById('finalizarBtn');
+        const limparBtn = document.getElementById('limparBtn');
+        const temposRegistradosDiv = document.getElementById('temposRegistrados');
+        const melhorTempoSpan = document.getElementById('melhorTempo');
+        const melhorVoltaSpan = document.getElementById('melhorVolta');
+        const tempoMedioSpan = document.getElementById('tempoMedio');
+        
+        function atualizarResultados() {
+            if (tempos.length === 0) {
+                melhorTempoSpan.textContent = '-';
+                melhorVoltaSpan.textContent = '-';
+                tempoMedioSpan.textContent = '-';
+                return;
+            }
+
+            const melhorTempo = Math.min(...tempos);
+            const melhorVolta = tempos.indexOf(melhorTempo) + 1;
+            const somaTempos = tempos.reduce((acc, curr) => acc + curr, 0);
+            const tempoMedio = somaTempos / tempos.length;
+
+            melhorTempoSpan.textContent = `${melhorTempo.toFixed(2)} segundos`;
+            melhorVoltaSpan.textContent = melhorVolta;
+            tempoMedioSpan.textContent = `${tempoMedio.toFixed(2)} segundos`;
+        }
+
+        adicionarBtn.addEventListener('click', () => {
+            const tempo = parseFloat(tempoVoltaInput.value);
+
+            if (!isNaN(tempo) && tempo > 0) {
+                tempos.push(tempo);
+                const p = document.createElement('p');
+                p.textContent = `Volta ${voltaCount}: ${tempo.toFixed(2)}s`;
+                temposRegistradosDiv.appendChild(p);
+                voltaCount++;
+                tempoVoltaInput.value = '';
+                tempoVoltaInput.focus();
+                
+                finalizarBtn.disabled = false;
+            } else {
+                alert('Por favor, insira um tempo de volta válido (número positivo).');
+                tempoVoltaInput.focus();
+            }
+        });
+
+        finalizarBtn.addEventListener('click', () => {
+            adicionarBtn.disabled = true;
+            finalizarBtn.disabled = true;
+            tempoVoltaInput.disabled = true;
+            atualizarResultados();
+        });
+
+        limparBtn.addEventListener('click', () => {
+            tempos = [];
+            voltaCount = 1;
+            tempoVoltaInput.value = '';
+            tempoVoltaInput.disabled = false;
+            adicionarBtn.disabled = false;
+            finalizarBtn.disabled = true;
+            temposRegistradosDiv.innerHTML = '<h3>Tempos Registrados:</h3>';
+            atualizarResultados();
+            tempoVoltaInput.focus();
+        });
+
+        tempoVoltaInput.focus();
+    </script>
+</body>
+</html>

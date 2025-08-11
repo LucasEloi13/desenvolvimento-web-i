@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intervalo de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-item label {
+            width: 150px;
+            text-align: left;
+        }
+
+        .input-item input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #mostrarBtn, #limparBtn {
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #mostrarBtn {
+            background-color: #007bff;
+        }
+
+        #limparBtn {
+            background-color: #dc3545;
+        }
+
+        #resultado {
+            text-align: left;
+            margin-top: 20px;
+            font-weight: bold;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Imprimir números em um intervalo</h2>
+        <div class="input-group">
+            <div class="input-item">
+                <label for="limiteInferior">Limite inferior:</label>
+                <input type="number" id="limiteInferior">
+            </div>
+            <div class="input-item">
+                <label for="limiteSuperior">Limite superior:</label>
+                <input type="number" id="limiteSuperior">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="mostrarBtn">Mostrar Números</button>
+            <button id="limparBtn">Limpar</button>
+        </div>
+
+        <div id="resultado">
+            <p><strong>Saída:</strong> <span id="numerosIntervalo"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const limiteInferiorInput = document.getElementById('limiteInferior');
+        const limiteSuperiorInput = document.getElementById('limiteSuperior');
+        const mostrarBtn = document.getElementById('mostrarBtn');
+        const limparBtn = document.getElementById('limparBtn');
+        const numerosIntervaloSpan = document.getElementById('numerosIntervalo');
+
+        mostrarBtn.addEventListener('click', () => {
+            const limiteInferior = parseInt(limiteInferiorInput.value);
+            const limiteSuperior = parseInt(limiteSuperiorInput.value);
+
+            if (limiteInferior <= limiteSuperior) {
+                let numeros = [];
+                for (let i = limiteInferior; i <= limiteSuperior; i++) {
+                    numeros.push(i);
+                }
+                numerosIntervaloSpan.textContent = numeros.join(' ');
+            } else {
+                numerosIntervaloSpan.textContent = 'Intervalo inválido. Certifique-se de que o limite inferior é menor ou igual ao superior.';
+            }
+        });
+
+        limparBtn.addEventListener('click', () => {
+            limiteInferiorInput.value = '';
+            limiteSuperiorInput.value = '';
+            numerosIntervaloSpan.textContent = '';
+            limiteInferiorInput.focus();
+        });
+
+        limiteInferiorInput.focus();
+    </script>
+</body>
+</html>

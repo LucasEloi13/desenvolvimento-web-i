@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #numeroInput {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #adicionarBtn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #limparBtn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #resultados {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        #resultados p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Digite um número (0 para finalizar):</h2>
+        <div class="input-group">
+            <input type="number" id="numeroInput" value="0">
+            <button id="adicionarBtn">Adicionar</button>
+            <button id="limparBtn">Limpar</button>
+        </div>
+
+        <div id="resultados">
+            <h3>Resultados:</h3>
+            <p><strong>Números lidos:</strong> <span id="numerosLidos"></span></p>
+            <p><strong>Quantidade de números lidos:</strong> <span id="quantidadeLidos">0</span></p>
+            <p><strong>Quantidade de números pares:</strong> <span id="quantidadePares">0</span></p>
+            <p><strong>Soma de todos os números:</strong> <span id="somaNumeros">0</span></p>
+            <p><strong>Média dos números lidos:</strong> <span id="mediaNumeros">0.00</span></p>
+            <p><strong>Maior número:</strong> <span id="maiorNumero"></span></p>
+            <p><strong>Menor número:</strong> <span id="menorNumero"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let numeros = [];
+
+        const numeroInput = document.getElementById('numeroInput');
+        const adicionarBtn = document.getElementById('adicionarBtn');
+        const limparBtn = document.getElementById('limparBtn');
+
+        const numerosLidosSpan = document.getElementById('numerosLidos');
+        const quantidadeLidosSpan = document.getElementById('quantidadeLidos');
+        const quantidadeParesSpan = document.getElementById('quantidadePares');
+        const somaNumerosSpan = document.getElementById('somaNumeros');
+        const mediaNumerosSpan = document.getElementById('mediaNumeros');
+        const maiorNumeroSpan = document.getElementById('maiorNumero');
+        const menorNumeroSpan = document.getElementById('menorNumero');
+
+        function atualizarResultados() {
+            if (numeros.length === 0) {
+                numerosLidosSpan.textContent = '';
+                quantidadeLidosSpan.textContent = '0';
+                quantidadeParesSpan.textContent = '0';
+                somaNumerosSpan.textContent = '0';
+                mediaNumerosSpan.textContent = '0.00';
+                maiorNumeroSpan.textContent = '';
+                menorNumeroSpan.textContent = '';
+                return;
+            }
+
+            const numerosSemZero = numeros.filter(num => num !== 0);
+            
+            const numerosLidos = numerosSemZero.join(', ');
+            const quantidadeLidos = numerosSemZero.length;
+            const quantidadePares = numerosSemZero.filter(num => num % 2 === 0).length;
+            const somaNumeros = numerosSemZero.reduce((acc, curr) => acc + curr, 0);
+            const mediaNumeros = quantidadeLidos > 0 ? (somaNumeros / quantidadeLidos).toFixed(2) : '0.00';
+            const maiorNumero = Math.max(...numerosSemZero);
+            const menorNumero = Math.min(...numerosSemZero);
+            
+            numerosLidosSpan.textContent = numerosLidos;
+            quantidadeLidosSpan.textContent = quantidadeLidos;
+            quantidadeParesSpan.textContent = quantidadePares;
+            somaNumerosSpan.textContent = somaNumeros;
+            mediaNumerosSpan.textContent = mediaNumeros;
+            maiorNumeroSpan.textContent = maiorNumero;
+            menorNumeroSpan.textContent = menorNumero;
+        }
+
+        adicionarBtn.addEventListener('click', () => {
+            const numero = parseInt(numeroInput.value);
+
+            if (!isNaN(numero)) {
+                if (numero === 0) {
+                    adicionarBtn.disabled = true;
+                    numeroInput.disabled = true;
+                } else {
+                    numeros.push(numero);
+                }
+                numeroInput.value = '';
+                numeroInput.focus();
+                atualizarResultados();
+            }
+        });
+
+        limparBtn.addEventListener('click', () => {
+            numeros = [];
+            numeroInput.value = '0';
+            numeroInput.disabled = false;
+            adicionarBtn.disabled = false;
+            atualizarResultados();
+            numeroInput.focus();
+        });
+
+        // Inicializar
+        atualizarResultados();
+    </script>
+</body>
+</html>
